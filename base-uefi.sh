@@ -6,10 +6,10 @@ sed -i '178s/.//' /etc/locale.gen
 locale-gen
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=de_CH-latin1" >> /etc/vconsole.conf
-echo "arch" >> /etc/hostname
+echo "pinoquio" >> /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
-echo "127.0.1.1 arch.localdomain arch" >> /etc/hosts
+echo "127.0.1.1 pinoquio.localdomain pinoquio" >> /etc/hosts
 echo root:password | chpasswd
 
 # You can add xorg to the installation packages, I usually add it at the DE or WM install script
@@ -36,11 +36,11 @@ systemctl enable libvirtd
 systemctl enable firewalld
 systemctl enable acpid
 
-useradd -m ermanno
-echo ermanno:password | chpasswd
-usermod -aG libvirt ermanno
+useradd -m msaraiva
+echo msaraiva:password | chpasswd
+usermod -aG libvirt msaraiva
 
-echo "ermanno ALL=(ALL) ALL" >> /etc/sudoers.d/ermanno
+echo "msaraiva ALL=(ALL) ALL" >> /etc/sudoers.d/msaraiva
 
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
