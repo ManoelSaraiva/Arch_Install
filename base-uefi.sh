@@ -1,11 +1,11 @@
 #!/bin/bash
 
-ln -sf /usr/share/zoneinfo/Europe/Zurich /etc/localtime
+ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 sed -i '178s/.//' /etc/locale.gen
 locale-gen
-echo "LANG=en_US.UTF-8" >> /etc/locale.conf
-echo "KEYMAP=de_CH-latin1" >> /etc/vconsole.conf
+echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
 echo "pinoquio" >> /etc/hostname
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
