@@ -1,15 +1,30 @@
 #!/bin/bash
 
+nome_pc = "pinoquio"
+nome_usuario = "msaraiva"
+layout_teclado = "KEYMAP=br-abnt2"
+
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
+
+
 sed -i '388s/.//' /etc/locale.gen
 locale-gen
+
 echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
-echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+
+# Layout do teclado
+echo $layout_teclado >> /etc/vconsole.conf
+
+# Adicionar um nome ao computador
 echo "pinoquio" >> /etc/hostname
+
+# Configuração do arquivo hosts
 echo "127.0.0.1 localhost" >> /etc/hosts
 echo "::1       localhost" >> /etc/hosts
 echo "127.0.1.1 pinoquio.localdomain pinoquio" >> /etc/hosts
+
+# Senha do usuario root
 echo root:password | chpasswd
 
 # You can add xorg to the installation packages, I usually add it at the DE or WM install script
@@ -20,10 +35,14 @@ pacman -S grub efibootmgr networkmanager network-manager-applet dialog wpa_suppl
 # pacman -S --noconfirm xf86-video-amdgpu
 # pacman -S --noconfirm nvidia nvidia-utils nvidia-settings
 
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB #change the directory to /boot/efi is you mounted the EFI partition at /boot/efi
+# Instalar o grub
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB #change the directory to /boot/efi is you mounted the EFI partition at /boot/efi
 
+
+# Gerar o grub.cfg
 grub-mkconfig -o /boot/grub/grub.cfg
 
+# Ativar serviços
 systemctl enable NetworkManager
 systemctl enable bluetooth
 systemctl enable cups.service
@@ -36,11 +55,16 @@ systemctl enable libvirtd
 systemctl enable firewalld
 systemctl enable acpid
 
-useradd -m msaraiva
-echo msaraiva:password | chpasswd
-usermod -aG libvirt msaraiva
 
-echo "msaraiva ALL=(ALL) ALL" >> /etc/sudoers.d/msaraiva
+# Criar o usuario e adicionar a senha
+useradd -m $nome_usuario
+echo $nome_usuario:password | chpasswd
+
+# Adicionar o usuario ao grupo libvirt
+usermod -aG libvirt $nome_usuario
+
+
+echo "$nome_usuario ALL=(ALL) ALL" >> /etc/sudoers.d/$nome_usuario
 
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
