@@ -8,8 +8,8 @@ ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc
 
 
-sed -i '388s/.//' /etc/locale.gen
-locale-gen
+#sed -i '388s/.//' /etc/locale.gen
+#locale-gen
 
 echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 
@@ -68,7 +68,3 @@ echo "$nome_usuario ALL=(ALL) ALL" >> /etc/sudoers.d/$nome_usuario
 
 
 printf "\e[1;32mDone! Type exit, umount -a and reboot.\e[0m"
-
-
-
-
