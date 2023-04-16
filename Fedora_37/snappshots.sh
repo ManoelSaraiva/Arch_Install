@@ -70,7 +70,7 @@ sudo snapper -c home create-config /home
 
 sudo snapper list-configs
 
-
+# **********************************************************
 sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
 
