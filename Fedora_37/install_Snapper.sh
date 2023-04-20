@@ -52,7 +52,6 @@ sudo nano /etc/fstab
 sudo systemctl daemon-reload
 sudo mount -va
 
-
 echo lsblk -p
 
 
