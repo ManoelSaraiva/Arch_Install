@@ -1,15 +1,15 @@
-#==========================================================================================================================
-#
-#                   Script para instalação do Virt-Manager no Fedora  
-#                    
-#                   https://virt-manager.org/
-#
-#                   Data: 15/04/2023
-#
-#                   Versão: 0.01
-#                   
-#==========================================================================================================================
-
+#!/bin/bash
+# ---------------------------------------------------------------------
+# Script    : install_VirtManager.sh  
+# Descrição : Script para instalação do Virt-Mannager no Fedora
+# Versão    : 0.01
+# Site	    : https://virt-manager.org/
+# Autor     : Manoel Saraiva - manoeljsaraiva@gmail.com
+# Data      : 15/04/2023
+# Licença   : GNU/GPL v3.0
+# ---------------------------------------------------------------------
+# Uso : ./install_VirtManager.sh
+# ---------------------------------------------------------------------
 
 #==========================================================================================================================
 #
@@ -38,7 +38,7 @@ sudo systemctl enable libvirtd
 #   Para adicionar usuario no libvirt
 
 echo "Adicionando o usuário ao grupo Libvirt..."
-sudo usermod -a -G libvirt $(whoami)
+sudo usermod -a -G libvirt $(USER)
 
 
 

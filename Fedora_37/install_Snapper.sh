@@ -1,11 +1,15 @@
-#==========================================================================================================================
-#
-#                   How to Install Fedora 37 with Snapper and Grub-Btrfs for Full System Rollback
-#                    
-#                   https://sysguides.com/install-fedora-37-with-snapper-and-grub-btrfs/
-#
-#==========================================================================================================================
-
+#!/bin/bash
+# ---------------------------------------------------------------------
+# Script    : install_Snapper.sh  
+# Descrição : Script para instalação e configuração do snapper no Fedora 37
+# Versão    : 0.01
+# Site	    : https://sysguides.com/install-fedora-37-with-snapper-and-grub-btrfs/
+# Autor     : Manoel Saraiva - manoeljsaraiva@gmail.com
+# Data      : 15/04/2023
+# Licença   : GNU/GPL v3.0
+# ---------------------------------------------------------------------
+# Uso : ./install_Snapper.sh
+# ---------------------------------------------------------------------
 
 echo "Mudando o label"
 sudo btrfs filesystem label / FEDORA
@@ -49,7 +53,7 @@ sudo systemctl daemon-reload
 sudo mount -va
 
 
-lsblk -p
+echo lsblk -p
 
 
 sudo btrfs subvolume list /
@@ -130,7 +134,7 @@ sleep 5
 
 
 echo "Diretorio onde estou: "
-pwd
+echo pwd
 
 git switch Add-systemd-volatile
 
