@@ -11,17 +11,27 @@
 # Uso : ./install_Snapper.sh
 # ---------------------------------------------------------------------
 
+
+# ---------------------------------------------------------------------
+#   Variaveis
+# ---------------------------------------------------------------------
+partition="nvme0n1p4"
+
+# ---------------------------------------------------------------------
+
+
+
 echo "Mudando o label"
 sudo btrfs filesystem label / FEDORA
 
-echo "Criando o subvolume /var/log"
+
 
 # Renomeia Var/log
 sudo mv -v /var/log /var/log-old
 
 sleep 2
 
-# Cria o subvolume var/log
+echo "Criando o subvolume /var/log"
 sudo btrfs subvolume create /var/log
 sleep 2
 
@@ -39,25 +49,23 @@ sudo rm -rvf /var/log-old
 
 # Adicionar a linha /var/log no fstab
 
-sudo nano /etc/fstab
+uuid_number="$(sudo blkid -s UUID -o value /dev/$partition)"
 
-# O UUIDé igual só muda a parte "/var/log  btrfs subvol=var/log,compress=zstd:1 0 0" 
-#   UUID=ff003a16-2819-493a-b4a5-4a8dec85ea7d /         btrfs defaults 0 0
-#   UUID=0799-62F5                            /boot/efi vfat  umask=0077,shortname=winnt 0 2
-#   UUID=ff003a16-2819-493a-b4a5-4a8dec85ea7d /home     btrfs subvol=home,compress=zstd:1 0 0
 # * UUID=ff003a16-2819-493a-b4a5-4a8dec85ea7d /var/log  btrfs subvol=var/log,compress=zstd:1 0 0
+# echo "UUID="$uuid_number"    /var/log    btrfs   subvol=var/log,compress=zstd:1 0 0" | sudo tee -a /etc/fstab
 
 
 # Reload fstab 
 sudo systemctl daemon-reload
 sudo mount -va
 
+
 echo lsblk -p
 
 
 sudo btrfs subvolume list /
 
-# Instalando programas nescessarios.
+# Instalando programas necessários.
 #
 # snapper
 # python-dnf-plugin-snapper
@@ -78,12 +86,12 @@ sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 sudo snapper -c home set-config ALLOW_USERS=$USER SYNC_ACL=yes
 
 
-# Muda as permissoes do grupo
+# Muda as permissões do grupo
 sudo chown -R :$USER /.snapshots
 sudo chown -R :$USER /home/.snapshots
 
 
-sudo vi /etc/fstab
+#	Caso o home esteja em um HD diferente
 
 #   Adicionar essas duas linhas ao fstab
 #
